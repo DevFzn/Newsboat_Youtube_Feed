@@ -41,7 +41,7 @@ Permite importar desde una base de datos de [NewPipe](https://github.com/TeamNew
   - **wget**
     - Consultas a youtube.com
   - sqlite3
-    - Importa [newpipe](https://github.com/newsboat/newsboat).db, *opcional*
+    - Importa [newpipe](https://github.com/TeamNewPipe/NewPipe/).db, *opcional*
   - unzip
     - Extrae [newpipe](https://github.com/newsboat/newsboat)-db.zip, *opcional*
   - **grep**
