@@ -70,7 +70,6 @@ Main(){
             NEWNAME=$(cut -d'|' -f2 <<< $line)
             ValidaLink "${NEWID}" "${NEWNAME}"
         done <<< "$(sqlite3 $1 'select url,name from subscriptions' |  cut -d\/ -f5)"
-        rm -f /tmp/newpipe.db
     }
 
     # extrae newpipe-db.zip
@@ -79,6 +78,7 @@ Main(){
             printf 'Unzipping %s en /tmp/ \n' "${1}"
             unzip -qq $RUTADB newpipe.db -d /tmp/ && \
             ImportDB '/tmp/newpipe.db'
+            rm -f /tmp/newpipe.db
         elif [[ ${RUTADB} == *\.db ]]; then
             ImportDB ${RUTADB}
         else
