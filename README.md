@@ -53,18 +53,18 @@ Permite importar desde una base de datos de [NewPipe](https://github.com/TeamNew
 
 ```mermaid
 sequenceDiagram
-    participant Link
-    participant Lista de Links
+    participant URL
+    participant Lista de URLs
     participant Base de Datos
     participant Json
     participant Validador
     participant Agregar RSS
-    Link->>Validador: Obtener Id
-    loop Extraer Id y Nombre    
-        Base de Datos->>Validador: 
-    end
+    URL->>Validador: Obtener Id
     loop Obtener Id 
-        Lista de Links->>Validador: 
+        Lista de URLs->>Validador: 
+    end
+    loop Obtener Id
+        Base de Datos->>Validador: unzip de ser necesario
     end
     loop Obtener Id
         Json->>Validador: 
