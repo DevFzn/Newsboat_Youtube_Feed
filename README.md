@@ -43,19 +43,31 @@ Permite importar desde una base de datos de [NewPipe](https://github.com/TeamNew
   - sqlite3
     - Importa [newpipe](https://github.com/TeamNewPipe/NewPipe/).db, *opcional*
   - unzip
-    - Extrae [newpipe](https://github.com/newsboat/newsboat)-db.zip, *opcional*
+    - Extrae [newpipe](https://github.com/TeamNewPipe/NewPipe/)-db.zip, *opcional*
   - **grep**
   - **sed**
 
 ----
 
 ### Script
+
 ```mermaid
-graph TD
-    Main[Script] --> Link --> GetID[Obtener ID]
-    Main --> Lista[Lista de Links] --> GetID
-    Main --> BD[Base de Datos] --> Extraer[Extraer ID y Nombre]
-    Main --> JSON --> Validador
-    Extraer --> Validador
-    GetID --> Validador --> AddRSS[Agregar RSS]
+sequenceDiagram
+    participant Link
+    participant Lista de Links
+    participant Base de Datos
+    participant Json
+    participant Validador
+    participant Agregar RSS
+    Link->>Validador: Obtener Id
+    loop Extraer Id y Nombre    
+        Base de Datos->>Validador: 
+    end
+    loop Obtener Id 
+        Lista de Links->>Validador: 
+    end
+    loop Obtener Id
+        Json->>Validador: 
+    end
+    Validador->>Agregar RSS: a newsboat urls
 ```
