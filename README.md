@@ -58,7 +58,7 @@ sequenceDiagram
     participant Base de Datos
     participant Json
     participant Validador
-    participant Agregar RSS
+    participant Newsboat RSS
     URL->>Validador: Obtener Id
     loop Obtener Id 
         Lista de URLs->>Validador: 
@@ -69,5 +69,5 @@ sequenceDiagram
     loop Obtener Id
         Json->>Validador: 
     end
-    Validador->>Agregar RSS: a newsboat urls
+    Validador->>Newsboat RSS: agregar
 ```
