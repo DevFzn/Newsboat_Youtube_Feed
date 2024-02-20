@@ -16,12 +16,12 @@ Main(){
 
     # obtener Id y nombre del canal (max 30 caracteres)
     GetId() {
-        wget -L --output-document=/tmp/tempLink "${1}" && \
+        wget --no-verbose -L --output-document=/tmp/tempLink "${1}" && \
         NEWID=$(grep -oE "/channel/.{0,24}" /tmp/tempLink | head -n 1 | cut -d'/' -f3) && \
         [[ $(printf '%s' "${NEWID}" | wc -c) == "24" ]] && \
-        NEWNAME=$(grep -oE "\"channelName\"\:\".{0,30}" /tmp/tempLink | cut -d\" -f 4) || \
+        NEWNAME=$(grep -oE "\"channelName\":\".{0,30}" /tmp/tempLink | cut -d\" -f 4) || \
         Err 0 "URL: ${1}" 
-        [[ ${NEWNAME} == '' ]] && NEWNAME=$(grep -oE "name\"\:\ \".{0,30}" /tmp/tempLink | cut -d\" -f 3)
+        [[ ${NEWNAME} == '' ]] && NEWNAME=$(grep -oE "name\": \".{0,30}" /tmp/tempLink | cut -d\" -f 3)
         USERLINK='' && rm -f /tmp/tempLink
         ValidaLink "${NEWID}" "${NEWNAME}"
     }
@@ -35,16 +35,14 @@ Main(){
                 BASEURL="https://youtube.com/feeds/videos.xml?channel_id=${1}"
                 AddLink "${BASEURL}" "${NEWNAME}"
             else
-                #echo "${2}"
                 printf '\nOmitiendo [%s], canal ya esta en la lista.\n' "${2}"
             fi
         fi
     }
 
-    # DEBUG en /tmp/
     # agregar canal a URLS
     AddLink(){
-        #printf '%s\n' "${1} \"~${2}\"" >> /tmp/urlsTemp
+        #printf '%s\n' "${1} \"~${2}\"" >> /tmp/urlsTemp # DEBUG en /tmp/
         printf '%s\n' "${1} \"~${2}\"" >> ${HOME}/.config/newsboat/urls
         Title "Canal agregado: ${2}" && NEWNAME='' && NEWID=''
     }
@@ -52,7 +50,7 @@ Main(){
     # leer lista de urls, validar y agregar
     AddList(){
         printf 'Ruta al archivo\n'
-        read -p '--> : ' LISTA
+        read -ep '--> : ' LISTA
         if [[ -f $LISTA ]]; then
             while read -r line; do
                 GetId "${line}"
@@ -123,13 +121,13 @@ Main(){
                 ;;
             '3')
                 printf 'Ruta a la base de datos\n'
-                read -p '--> : ' RUTADB
+                read -ep '--> : ' RUTADB
                 NewPipeDB ${RUTADB}
                 exit 0
                 ;;
             '4')
                 printf 'Ruta al archvo JSON\n'
-                read -p '--> : ' RUTAJSON
+                read -ep '--> : ' RUTAJSON
                 ImportJSON ${RUTAJSON}
                 exit 0
                 ;;
@@ -147,4 +145,3 @@ Main(){
 }
 
 Main
-
